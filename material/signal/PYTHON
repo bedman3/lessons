@@ -1,0 +1,22 @@
+
+
+** High Level Architecture **
+User Code
+-> Graph + FeatureRegistry
+--> Node hierarchy (base)
+--> @op() decorator system
+
+<- finalize_construction()
+
+-> Graph Optimizer (Fusion)
+--> Topo Sort
+--> Node Dedup
+
+<- Scheduler Dispatch
+-> Stream
+-> BatchStream
+
+<- RingBufferDataStore  
+--> in-memory ring
+
+--> Output Sinks (parquet, xarray, kafka, etc.)
