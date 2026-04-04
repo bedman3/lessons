@@ -26,7 +26,7 @@ All data starts as 3D xarray Datasets with dimensions `(product_id, endtime, dat
 
 Every computation is indexed by a SampleGrid = (univ, time_interval, weight, product_group)
 A pipeline run creates **Cartesian product** of all grid dimensions. For example:
-- 2 universe x 3 intervals x 4 weights x 5 product groups = ** X sample grids**
+- 2 universe x 3 intervals x 4 weights x 5 product groups = **X sample grids**
 
 ## 3. Phase 1: Daily Sufficient Statistics
 
