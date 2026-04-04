@@ -271,3 +271,30 @@ This is the OLS coefficient of regressing Y on the prediction alpha - i.e., how 
 ```
 SR  = mean(daily_metric) / std(daily_metric) * sqrt(252)
 ```
+
+Annualized by sqrt(252) trading days per year
+
+### Step 6.6: Daily vs Period Metrics
+
+**Daily metrics:** IC and SP are computed per date using that day's sufficient statistics. This gives a time series: IC_day1, IC_day2, ...
+
+**Period metrics:** For an eval period (e.g., 2023-01-01 to 2023-12-31), sum the sufficient statistics across all days in the period, then compute IC/SP form the summed statistics. This is the "overall" IC/SP.
+
+### Step 6.7: Clipped Performance (Optional)
+When a flag is turned on, predictions are winsorized at configurable quantiles (default: 1st and 99th percentile) before computing IC/SP. This measures performance after removing extreme outliers.
+
+## 7. Phase 5: Term Statistics (No Fitting)
+
+**Goal:** Measure raw feature predictive power without any model fitting.
+
+### How It Differs from Fitting Report
+In the fitting report, IC/SP measure the predictive power of **alpha = X @ beta** (the linear combination).
+
+In the term report, IC/SP measure the predictive power of **each feature independently**. Since there's no beta, we use the diagonal of XTX:
+```
+IC_feature_j = XTY_j / sqrt(XTX_jj * YTY_jj) * 100
+SP_feature_j = XTY_j / sqrt(XTX_jj * W_sum) * 10000
+```
+
+Where `XTX_jj = diag(X^T W X)[j]` and `XTY_j = (X^T W Y)[j, :]`
+
