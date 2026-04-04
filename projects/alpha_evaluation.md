@@ -130,7 +130,71 @@ A 2-year lookback window has ~504 trading days. Loading 504 daily files is slow.
 **Goal:** For each rolling window x fitting group x fitter, solve for regression coefficients.
 
 ### Step 5.1: Rolling Window Construction
+
+
+A rolling window defines:
+- **Training period**: dates used to fit the model
+- **Validation period**: dates used to evaluate predictions
+```
+train_start - TRAINING SET - train_end | 22 business day gap | val_start - VALIDATINO_SET - val_end
 ```
 
-A rolling window defines
+**The 22-business-day gap** prevents label leakage: if Y is "return over next 1 day", a model trained on data up to day T could have label information from day T+1. The 25-day buffer exceeds any typical prediction horizon.
+
+**Exclude dates**: `fitting_exclude_dates` removes specific dates from training (e.g. COVID crash / black swarn). `evaluation_exclude_dates` removes dates from validation / reporting
+
+### Step 5.2: Accumulate Training Statistics
+
 ```
+IMPORTANT: Average over number of training days
+Get XTX_sum / XTtY across all days in the period and divide by the valid sample size
+```
+
+**Why average?** The averaging normalizes the sufficient statistics so that the regularizatino parameter lambda has consistent meaning regardless of training set size. Without averaging, a 2-year window would need a different lambda than a 1-year window.
+
+**Key detail:** Only the clipped Y targets (`_c` suffix) are used for training
+
+### Step 5.3: Fitting Groups - Feature Selection
+The system fits separate models per **fitting group**. Each group specifies it's own feaures and targets:
+
+For each group, the code selects the relevant rows/columns from the accumulated XTX and XTtY:
+
+### Step 5.4: Ridge Regression
+
+**Mathematical formulation:**
+
+Given:
+- X^T W X (the averaged weighted Gram matrix, shape p x p)
+- X^T W Y (the averaged weighted cross-product, shape p x q)
+- lambda (regularization strength, default 0.1)
+
+The Ridge solution is:
+```
+beta = (X^T W X + lambda * I)^{-1} @ X^T W Y
+```
+
+**With normalization** (default True)
+```
+D = diag(1/ sqrt(diag(X^T W X)))            # scaling matrix
+M_norm = D @ (X^T W X) @ D                  # normalized so diag(M_norm) = 1
+b_norm = D @ (X^T W Y)                      # normalized RHS
+
+beta_norm = solve(M_norm + lambda * I, b_norm)
+beta = D @ beta_norm                        # un-normalize
+
+beta = np.linalg.solve(XTWX + lambda * np.eye(XYX.shape[0]), XTWY)
+```
+
+**Why normalize?** Without normalization, features with larger variance dominate the regularization. Normalizing ensures lambda penalizes all features equally, regardless of scale.
+
+**Output:** `beta` has shape `(n_features, n_targets)` - one coefficient per feature per target.
+
+### Step 5.5: Alternative Models:
+**CONSTANT model**
+- No fitting - coefficients are user-specified constants
+- Useful for benchmarking or creating equal-weighted portfolios
+
+**FF (Forward Feature Selection)**
+- Produces `n_snap` snapshots, each addint the next best feature
+- Coefficients at each snapshot are Ridge solutions on the selected subset
+
