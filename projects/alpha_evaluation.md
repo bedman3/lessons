@@ -198,3 +198,76 @@ beta = np.linalg.solve(XTWX + lambda * np.eye(XYX.shape[0]), XTWY)
 - Produces `n_snap` snapshots, each addint the next best feature
 - Coefficients at each snapshot are Ridge solutions on the selected subset
 
+
+### Step 6.1: Prediction
+For each validation date, the prediction alpha is:
+```
+alpha_i = X_i @ beta
+```
+
+where X_i is the feature vector for stock i at time t, and beta are the fitted coefficients
+we don't need individiual predictions to get IC/SP - it works directly with sufficient statistics
+```
+alpha^T W alpha = beta^T @ (X^T W X) @ beta         <- "predicted signal variance"
+alpha^T W Y     = beta^T @ (X^T W Y)                <- "predicted signal-return covariance"
+```
+
+This means IC and SP can be computed from XYX, XTY, and the fitted beta - without ever materializaing the full prediction vector.
+
+### Step 6.2: IC (Information Coefficient)
+**Definition:**
+```
+IC  = corr(alpha, Y, W)
+    = sum(alpha * Y * W) / sqrt(sum(alpha^2 * W) * sum(Y^2 * W))
+```
+
+**In matrix form** (using sufficient statistics):
+```
+IC  = (X^T W Y) / sqrt(diag(X^T W X) * diag(Y^T W Y)) * 100
+```
+
+For the **term report** (no fitting, evaluating raw features):
+- X^T W X is just the diagonal (`X_diag`)
+- X^T W Y is the cross-product with eval targets
+
+For the **fitting report** (evaluating predictions):
+- Replace X with `alpha = X @ beta`
+- `alpha^T W alpha = beta^T @ XTX @ beta` (scalar per prediction)
+- `alpha^T W Y = beta^T @ XTY` (scalar per prediction x target)
+```python
+IC = XWY_vals / (np.sqrt(X_diag.reshape((-1, 1)) * np.diag(YWY_vals).reshape((1, -1)))) * 100
+```
+
+**Scale:** IC is reported as percentage (x 100). A daily IC of 2-5% is considered good.
+
+### Step 6.3: SP (Single Predictive Power)
+**Definitino:**
+```
+SP = sum(alpha * Y * W) / sqrt(sum(alpha^2 * W) * sum(W)) * 10000
+```
+
+**In matrix form:**
+```
+SP = (X^T W Y) / sqrt(diag(X^T W X) * W_sum) * 10000
+```
+```python
+SP = (XWY_vals / (np.sqrt(X_diag.reshape((-1, 1)) * W_sum_vals))) * 10000
+```
+
+**Difference from IC:** SP normalized by total weight instead of Y variance. This means SP captures both predictive correlation AND the variabiility of Y. SP is more directly related to P&L.
+
+**Scale:** SP is in basis points (x 10000).
+
+### Step 6.4: sp (unnormalized predictor)
+```
+sp  = sum(alpha * Y * W) / sum(alpha^2 * W)
+    = (X^T W Y) / diag(X^T W X)
+```
+
+This is the OLS coefficient of regressing Y on the prediction alpha - i.e., how much of Y does the prediction explain per unit of predictino variance.
+
+
+### Step 6.5: SR (Sharpe Ratio)
+```
+SR  = mean(daily_metric) / std(daily_metric) * sqrt(252)
+```
