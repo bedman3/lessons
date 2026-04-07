@@ -27,4 +27,7 @@ t_price_h = filter(trade_tick_mask_h, event_fill_price_h)
 t_quantity_h = filter(trade_tick_mask_h, vol_traded_h)
 t_bid_0_nbbo_price_h = filter(trade_tick_mask_h, bid_0_nbbo_price_h)
 t_ask_0_nbbo_price_h = filter(trade_tick_mask_h, ask_0_nbbo_price_h)
+t_local_ts_h = filter(trade_tick_mask_h, local_timestamp_h)
+t_exchange_ts_h = filter(trade_tick_mask_h, exchange_timestamp_h)
+turnover_h = t_price_h * t_quantity_h
 ```
