@@ -6,10 +6,10 @@
 
 A Markov chain is a model for a system that moves among a finite or countable set of states. Its defining shortcut is simple:
 
-\[
+$$
 \Pr(X_{t+1}=j\mid X_t=i, X_{t-1},\ldots,X_0)
 =\Pr(X_{t+1}=j\mid X_t=i).
-\]
+$$
 
 Conditional on the **current state** $X_t$, the model says the older history adds no information about the next state. This is the *Markov property*.
 
@@ -37,21 +37,21 @@ We use a **discrete-time**, time-homogeneous chain with states $1,\ldots,K$. A t
 
 Let
 
-\[
+$$
 P_{ij}=\Pr(X_{t+1}=j\mid X_t=i).
-\]
+$$
 
 The $K\times K$ matrix $P$ is the **transition matrix**. We use the row-vector convention:
 
 - $P_{ij}\ge 0$;
-- every row sums to one: \(\sum_j P_{ij}=1\);
-- a distribution is a row vector \(\mu_t\), so \(\mu_{t+1}=\mu_tP\).
+- every row sums to one: $\sum_j P_{ij}=1$;
+- a distribution is a row vector $\mu_t$, so $\mu_{t+1}=\mu_tP$.
 
 The $n$-step probability is
 
-\[
+$$
 \Pr(X_{t+n}=j\mid X_t=i)=(P^n)_{ij}.
-\]
+$$
 
 This is the Chapman–Kolmogorov idea in matrix form: to get from $i$ to $j$ in two steps, sum over every possible intermediate state.
 
@@ -59,45 +59,45 @@ This is the Chapman–Kolmogorov idea in matrix form: to get from $i$ to $j$ in 
 
 Suppose a stylised market has two **observed** regimes: Calm $C$ and Stressed $S$, with a daily transition matrix
 
-\[
+$$
 P=
 \begin{pmatrix}
 0.95 & 0.05\\
 0.20 & 0.80
 \end{pmatrix}.
-\]
+$$
 
 The first row says a calm day is followed by stress with probability 5%; the second says stress persists with probability 80%. The probability of stress two days after a calm day is
 
-\[
+$$
 (P^2)_{CS}=0.95(0.05)+0.05(0.80)=0.0875.
-\]
+$$
 
 The extra 4 percentage points relative to 5% arises because the chain can enter stress tomorrow and remain there.
 
 ### 2.3 Stationary distribution
 
-A distribution \(\pi\) is **stationary** if
+A distribution $\pi$ is **stationary** if
 
-\[
+$$
 \pi=\pi P, \qquad \sum_i\pi_i=1.
-\]
+$$
 
-For the two-state example, write \(\pi=(\pi_C,\pi_S)\). The balance condition is
+For the two-state example, write $\pi=(\pi_C,\pi_S)$. The balance condition is
 
-\[
+$$
 0.05\pi_C=0.20\pi_S,
-\]
+$$
 
-which gives \(\pi=(0.80,0.20)\). In a long, stable sample, the chain spends 20% of days in stress *under this model*. It does **not** say that the probability of stress is always 20%, nor that the real market has a fixed stationary law.
+which gives $\pi=(0.80,0.20)$. In a long, stable sample, the chain spends 20% of days in stress *under this model*. It does **not** say that the probability of stress is always 20%, nor that the real market has a fixed stationary law.
 
 ### 2.4 Conditional, marginal, and transition probability
 
 Keep these distinct in interviews:
 
-- \(P_{ij}\): a conditional, one-step transition probability;
-- \(\mu_t(j)\): the unconditional probability of state $j$ at time $t$, given the initial distribution;
-- \(\pi_j\): a stationary marginal probability, if a suitable stationary distribution exists.
+- $P_{ij}$: a conditional, one-step transition probability;
+- $\mu_t(j)$: the unconditional probability of state $j$ at time $t$, given the initial distribution;
+- $\pi_j$: a stationary marginal probability, if a suitable stationary distribution exists.
 
 ---
 
@@ -107,7 +107,7 @@ The words below are not just theory. Each reveals a potential error in a financi
 
 | Property / trap | Mathematical meaning | Quant consequence | Diagnostic and response |
 |---|---|---|---|
-| Absorbing state | \(P_{ii}=1\) | Default is often modelled as absorbing. Recovery, cure, restructuring, and exit rules then need explicit treatment. | Check whether "default" is truly terminal at the stated horizon. Add post-default states if the use case needs recoveries. |
+| Absorbing state | $P_{ii}=1$ | Default is often modelled as absorbing. Recovery, cure, restructuring, and exit rules then need explicit treatment. | Check whether "default" is truly terminal at the stated horizon. Add post-default states if the use case needs recoveries. |
 | Reducible chain | Some states cannot communicate | A portfolio may split into classes that never transition under the fitted matrix; stationary conclusions can depend on where it starts. | Draw the transition graph; identify communicating classes. Do not report one global long-run distribution blindly. |
 | Periodic chain | Returns to a state only in multiples of an integer $d>1$ | A stylised alternating state produces oscillating probabilities rather than convergence. | Check cycle structure or examine powers of $P$. Use an aperiodic state definition / time scale if convergence is needed. |
 | Non-ergodic / no unique limiting law | Usually reducibility or periodicity prevents ordinary convergence | "Long-run average" or "equilibrium risk" can be ill-defined or initial-state dependent. | Establish irreducibility and aperiodicity before using a unique stationary distribution. |
@@ -119,31 +119,31 @@ The words below are not just theory. Each reveals a potential error in a financi
 
 Suppose transient states come first and absorbing states last. Partition the matrix as
 
-\[
+$$
 P=\begin{pmatrix}Q&R\\0&I\end{pmatrix}.
-\]
+$$
 
 Here $Q$ describes movements among non-absorbing states. The **fundamental matrix** is
 
-\[
+$$
 N=(I-Q)^{-1}=I+Q+Q^2+\cdots.
-\]
+$$
 
 Its entry $N_{ij}$ is the expected number of visits to transient state $j$ when starting in $i$. The vector of expected times to absorption is
 
-\[
+$$
 \mathbf{t}=N\mathbf{1}.
-\]
+$$
 
 This is useful for default or churn models, but only if absorption is economically meaningful. A credit process that lets firms emerge from default is not an absorbing chain unless "default" has been defined as a terminal accounting event.
 
 ### 3.2 The first important finance warning: returns are rarely Markov by themselves
 
-A raw return sequence $r_t$ generally does not become well modelled by \(\Pr(r_{t+1}\mid r_t)\). Volatility clustering, jumps, intraday seasonality, leverage effects, liquidity, and latent information often matter. A better state may be something like
+A raw return sequence $r_t$ generally does not become well modelled by $\Pr(r_{t+1}\mid r_t)$. Volatility clustering, jumps, intraday seasonality, leverage effects, liquidity, and latent information often matter. A better state may be something like
 
-\[
+$$
 X_t=(\text{volatility bucket},\ \text{trend bucket},\ \text{liquidity bucket},\ \text{macro regime}).
-\]
+$$
 
 But adding variables increases data needs and can create sparse cells. State design is a bias–variance trade-off, not a quest for maximum granularity.
 
@@ -163,9 +163,9 @@ Before fitting $P$, write down five things.
 
 For observed states, let $n_{ij}$ be the number of observed transitions from $i$ to $j$. The maximum-likelihood estimator is
 
-\[
+$$
 \widehat P_{ij}=\frac{n_{ij}}{\sum_j n_{ij}}.
-\]
+$$
 
 This is intuitive: each row is a multinomial probability estimate. Yet direct frequency estimates are often fragile in finance because the important transitions—deep downgrade, default, liquidity collapse—are scarce.
 
@@ -201,7 +201,7 @@ A credible validation set goes beyond checking that rows sum to one.
 
 **Use.** Estimate migration probabilities, cumulative default probability, expected loss, and portfolio rating distribution. Default is often set as absorbing for a specific risk horizon.
 
-**Mechanics.** If today's rating distribution is \(\mu_0\), then the $h$-period distribution is \(\mu_0P^h\). If Default is state $D$, \((P^h)_{iD}\) is the model-implied cumulative probability of reaching default by $h$ when default is absorbing.
+**Mechanics.** If today's rating distribution is $\mu_0$, then the $h$-period distribution is $\mu_0P^h$. If Default is state $D$, $(P^h)_{iD}$ is the model-implied cumulative probability of reaching default by $h$ when default is absorbing.
 
 **Key trap.** A rating alone is rarely sufficient. Time spent in rating, outlook/watch status, leverage, sector, and macro conditions can all predict transitions. Also distinguish:
 
@@ -218,7 +218,7 @@ Using one as though it were the other is a model-governance failure.
 
 **Key trap.** If the regime is inferred from the same noisy returns it is meant to explain, state uncertainty matters. Treating estimated labels as ground truth gives overconfident parameters and optimistic backtests.
 
-**Better extension.** Use a Hidden Markov Model (HMM): latent $X_t$ follows a Markov chain, while the observable $Y_t$ is generated from a state-dependent distribution—for example, \(Y_t\mid X_t=k\sim\mathcal N(\mu_k,\sigma_k^2)\), or a heavier-tailed alternative. Estimate states probabilistically and evaluate both filtered real-time predictions and smoothed in-sample explanations.
+**Better extension.** Use a Hidden Markov Model (HMM): latent $X_t$ follows a Markov chain, while the observable $Y_t$ is generated from a state-dependent distribution—for example, $Y_t\mid X_t=k\sim\mathcal N(\mu_k,\sigma_k^2)$, or a heavier-tailed alternative. Estimate states probabilistically and evaluate both filtered real-time predictions and smoothed in-sample explanations.
 
 ### 5.3 Order-book and execution models
 
@@ -242,22 +242,22 @@ Using one as though it were the other is a model-governance failure.
 
 | Tool | When it helps | Main idea | Watch-out |
 |---|---|---|---|
-| Continuous-time Markov chain (CTMC) | Events happen irregularly; credit intensity and operational processes | A generator $G$ has non-negative off-diagonals and rows summing to zero; \(P(t)=e^{tG}\). | Not every empirical discrete matrix is exactly $e^{G}$ for a valid generator; time-homogeneity can still fail. |
+| Continuous-time Markov chain (CTMC) | Events happen irregularly; credit intensity and operational processes | A generator $G$ has non-negative off-diagonals and rows summing to zero; $P(t)=e^{tG}$. | Not every empirical discrete matrix is exactly $e^{G}$ for a valid generator; time-homogeneity can still fail. |
 | HMM / Markov-switching model | Regimes are not directly observed | Latent chain plus state-dependent observation model. Forward filtering estimates real-time state probabilities. | Label switching, local optima, state uncertainty, and unrealistic emission distributions. |
 | Non-homogeneous chain | Transitions move with macro variables, age, time of day, or season | $P_t$, or $P(z_t)$, changes with covariates. | More flexibility can overfit; future covariates may be unavailable at forecast time. |
 | Semi-Markov / duration model | Sojourn time matters | Transition chance depends on time already spent in state. | A simple chain implies geometric holding times, often unrealistic for ratings and regimes. |
-| Markov decision process (MDP) | You control actions such as execution aggressiveness | Transitions depend on state and action, \(P(j\mid i,a)\); optimise expected reward. | Backtest the policy with costs, constraints, and realistic market impact; do not confuse prediction with control. |
+| Markov decision process (MDP) | You control actions such as execution aggressiveness | Transitions depend on state and action, $P(j\mid i,a)$; optimise expected reward. | Backtest the policy with costs, constraints, and realistic market impact; do not confuse prediction with control. |
 | Coupled / factor models | Many obligors or assets move together | Common latent factors or conditional matrices create dependence. | Independent-chain portfolio simulations can dramatically understate clustered defaults and liquidity stress. |
 
 ### 6.1 Continuous-time chains in one paragraph
 
 For a CTMC, the generator $G$ satisfies $G_{ij}\ge0$ for $i\ne j$, $G_{ii}=-\sum_{j\ne i}G_{ij}$, and
 
-\[
+$$
 P(t)=\exp(tG).
-\]
+$$
 
-The off-diagonal $G_{ij}$ is an instantaneous transition intensity, not a probability. For a small interval \(\Delta t\), \(P_{ij}(\Delta t)\approx G_{ij}\Delta t\) when $i\ne j$. CTMCs avoid arbitrary resampling of irregular events, but they introduce an embedding/calibration problem: a monthly transition matrix may not correspond exactly to any valid continuous-time generator.
+The off-diagonal $G_{ij}$ is an instantaneous transition intensity, not a probability. For a small interval $\Delta t$, $P_{ij}(\Delta t)\approx G_{ij}\Delta t$ when $i\ne j$. CTMCs avoid arbitrary resampling of irregular events, but they introduce an embedding/calibration problem: a monthly transition matrix may not correspond exactly to any valid continuous-time generator.
 
 ### 6.2 The state-space explosion problem
 
@@ -291,31 +291,31 @@ This is much stronger than launching directly into eigenvectors or saying "I wou
 
 **Question.** A chain has
 
-\[
+$$
 P=\begin{pmatrix}0.7&0.3\\0.4&0.6\end{pmatrix}.
-\]
+$$
 
 What is the probability of being in state 2 after two steps, starting in state 1?
 
 **Answer outline.** Sum the two paths:
 
-\[
+$$
 0.7(0.3)+0.3(0.6)=0.39.
-\]
+$$
 
-Or compute \((P^2)_{12}\). Say why multiplication works: it sums over all intermediate states.
+Or compute $(P^2)_{12}$. Say why multiplication works: it sums over all intermediate states.
 
 ### 7.3 Derivation question: stationary distribution
 
 **Question.** For the same matrix, find the stationary distribution.
 
-**Answer outline.** Let \(\pi=(a,1-a)\). The first component of \(\pi=\pi P\) gives
+**Answer outline.** Let $\pi=(a,1-a)$. The first component of $\pi=\pi P$ gives
 
-\[
+$$
 a=0.7a+0.4(1-a),
-\]
+$$
 
-so $0.7a=0.4$, hence \(a=4/7\) and \(\pi=(4/7,3/7)\). Check non-negativity and that the components sum to one. If asked about convergence, note that this finite chain is irreducible and aperiodic because all entries are positive.
+so $0.7a=0.4$, hence $a=4/7$ and $\pi=(4/7,3/7)$. Check non-negativity and that the components sum to one. If asked about convergence, note that this finite chain is irreducible and aperiodic because all entries are positive.
 
 ### 7.4 Concept question: "How would you model rating migration?"
 
@@ -334,7 +334,7 @@ so $0.7a=0.4$, hence \(a=4/7\) and \(\pi=(4/7,3/7)\). Check non-negativity and t
 
 ### 7.6 Design question: "How do you make a non-Markov process Markov?"
 
-**Answer outline.** Enlarge the state to include the predictive history or a sufficient statistic. For an AR(2)-like process, \(X_t=(r_t,r_{t-1})\) can be Markov even when $r_t$ alone is not. In finance, include volatility, duration, macro conditions, or order-book features only if they are available at decision time and improve out-of-sample prediction. Then mention the cost: state-space explosion and sparse data.
+**Answer outline.** Enlarge the state to include the predictive history or a sufficient statistic. For an AR(2)-like process, $X_t=(r_t,r_{t-1})$ can be Markov even when $r_t$ alone is not. In finance, include volatility, duration, macro conditions, or order-book features only if they are available at decision time and improve out-of-sample prediction. Then mention the cost: state-space explosion and sparse data.
 
 ### 7.7 Trick question: "Does a stationary distribution mean the process is stationary?"
 
@@ -359,12 +359,12 @@ so $0.7a=0.4$, hence \(a=4/7\) and \(\pi=(4/7,3/7)\). Check non-negativity and t
 
 | Item | Remember |
 |---|---|
-| One-step dynamics | \(\mu_{t+1}=\mu_tP\) under the row-vector convention. |
-| $h$-step dynamics | \(\mu_{t+h}=\mu_tP^h\). |
-| Stationary distribution | Solve \(\pi=\pi P\) and \(\sum_i\pi_i=1\). |
+| One-step dynamics | $\mu_{t+1}=\mu_tP$ under the row-vector convention. |
+| $h$-step dynamics | $\mu_{t+h}=\mu_tP^h$. |
+| Stationary distribution | Solve $\pi=\pi P$ and $\sum_i\pi_i=1$. |
 | Unique limiting distribution (finite-state intuition) | Look for irreducible + aperiodic chain. |
-| Absorbing-chain times | Partition $P$, then \(N=(I-Q)^{-1}\), \(\mathbf t=N\mathbf1\). |
-| CTMC | \(P(t)=e^{tG}\); $G$'s off-diagonals are intensities, not probabilities. |
+| Absorbing-chain times | Partition $P$, then $N=(I-Q)^{-1}$, $\mathbf t=N\mathbf1$. |
+| CTMC | $P(t)=e^{tG}$; $G$'s off-diagonals are intensities, not probabilities. |
 | Markov assumption | The next step depends only on a well-designed current state—not merely on the most recent raw observation. |
 | Interview red flag | Treating an in-sample transition matrix or stationary vector as proof of a stable real-world process. |
 
