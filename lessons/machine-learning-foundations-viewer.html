@@ -11,6 +11,9 @@
     header { background: linear-gradient(135deg, #4c1d95, #7c3aed); color: #fff; padding: 2.5rem max(1.25rem, calc((100vw - 850px) / 2)); }
     header h1 { margin: 0; font: 700 clamp(1.8rem, 5vw, 2.7rem)/1.15 ui-sans-serif, system-ui, sans-serif; }
     header p { margin: .6rem 0 0; color: #ede9fe; }
+    header .back { margin: 0 0 .4rem; font-family: ui-sans-serif, system-ui, sans-serif; font-size: .85em; }
+    header .back a { color: #ede9fe; text-decoration: none; }
+    header .back a:hover { text-decoration: underline; }
     main { width: min(850px, calc(100% - 2rem)); margin: 1.5rem auto 4rem; background: var(--paper); padding: clamp(1.25rem, 5vw, 3.5rem); border: 1px solid var(--rule); border-radius: 14px; box-shadow: 0 12px 40px #1d2a3912; }
     h1, h2, h3 { font-family: ui-sans-serif, system-ui, sans-serif; line-height: 1.25; color: #102b42; }
     h1 { font-size: 2rem; } h2 { font-size: 1.55rem; border-bottom: 1px solid var(--rule); padding-bottom: .35rem; margin-top: 2.4rem; } h3 { font-size: 1.18rem; margin-top: 1.8rem; }
@@ -75,7 +78,7 @@
   </script>
 </head>
 <body>
-  <header><h1>Machine Learning &amp; Deep Learning Foundations</h1><p>From trees to Transformers — the maths, architectures, and training tricks that matter.</p></header>
+  <header><p class="back"><a href="index.html">← All lessons</a></p><h1>Machine Learning &amp; Deep Learning Foundations</h1><p>From trees to Transformers — the maths, architectures, and training tricks that matter.</p></header>
   <main><p class="loading">Loading lesson…</p></main>
 </body>
 </html>
