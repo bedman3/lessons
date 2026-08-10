@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ch 4 — Decompositions: Factor Everything</title>
+  <style>
+    :root { color-scheme: light; --ink: #172033; --muted: #5d687a; --rule: #dce3ed; --accent: #b45309; --paper: #fff; --bg: #f5f7fa; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.65 ui-serif, Georgia, Cambria, "Times New Roman", serif; }
+    header { background: linear-gradient(135deg, #7c2d12, #b45309); color: #fff; padding: 2.5rem max(1.25rem, calc((100vw - 850px) / 2)); }
+    header .back { margin: 0 0 .4rem; font-family: ui-sans-serif, system-ui, sans-serif; font-size: .85em; }
+    header .back a { color: #fef3c7; text-decoration: none; }
+    header .back a:hover { text-decoration: underline; }
+    header h1 { margin: 0; font: 700 clamp(1.8rem, 5vw, 2.7rem)/1.15 ui-sans-serif, system-ui, sans-serif; }
+    header p { margin: .6rem 0 0; color: #fef3c7; }
+    main { width: min(850px, calc(100% - 2rem)); margin: 1.5rem auto 4rem; background: var(--paper); padding: clamp(1.25rem, 5vw, 3.5rem); border: 1px solid var(--rule); border-radius: 14px; box-shadow: 0 12px 40px #1d2a3912; }
+    h1, h2, h3 { font-family: ui-sans-serif, system-ui, sans-serif; line-height: 1.25; color: #102b42; }
+    h1 { font-size: 2rem; } h2 { font-size: 1.55rem; border-bottom: 1px solid var(--rule); padding-bottom: .35rem; margin-top: 2.4rem; } h3 { font-size: 1.18rem; margin-top: 1.8rem; }
+    p, li { overflow-wrap: anywhere; } ul, ol { padding-left: 1.45rem; } li + li { margin-top: .3rem; }
+    blockquote { margin: 1.25rem 0; padding: .7rem 1rem; border-left: 4px solid var(--accent); background: #fffbeb; color: #7c2d12; }
+    hr { border: 0; border-top: 1px solid var(--rule); margin: 2rem 0; }
+    code { font: .9em ui-monospace, SFMono-Regular, Menlo, monospace; color: #6d264e; }
+    pre { background: #f8f9fb; border: 1px solid var(--rule); border-radius: 8px; padding: 1rem 1.25rem; overflow-x: auto; font: .85em ui-monospace, SFMono-Regular, Menlo, monospace; line-height: 1.55; }
+    .display-math { overflow-x: auto; padding: .5rem 0; text-align: center; }
+    table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; margin: 1.25rem 0; font-size: .92em; }
+    th, td { border: 1px solid var(--rule); padding: .55rem .7rem; vertical-align: top; text-align: left; }
+    th { background: #eff5f7; font-family: ui-sans-serif, system-ui, sans-serif; }
+    .chapnav { width: min(850px, calc(100% - 2rem)); margin: -2.5rem auto 0; display: flex; justify-content: space-between; font-family: ui-sans-serif, system-ui, sans-serif; font-size: .9em; }
+    .chapnav a { color: var(--accent); text-decoration: none; padding: .5rem .8rem; background: var(--paper); border: 1px solid var(--rule); border-radius: 8px; }
+    .chapnav a:hover { border-color: var(--accent); }
+    .loading, .error { font-family: ui-sans-serif, system-ui, sans-serif; color: var(--muted); }
+    .error { color: #9f1239; }
+    @media (max-width: 600px) { body { font-size: 16px; } main { width: 100%; margin: 0; border: 0; border-radius: 0; box-shadow: none; } .chapnav { width: 100%; margin: 0; } }
+  </style>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      startup: { typeset: false }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script>
+    function esc(text) { return text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;'); }
+    function inline(text) {
+      let x = esc(text);
+      x = x.replace(/`([^`]+)`/g, '<code>$1</code>');
+      x = x.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      x = x.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+      return x;
+    }
+    function cells(line) { return line.trim().replace(/^\||\|$/g, '').split('|').map(x => inline(x.trim())); }
+    function isDivider(line) { return /^\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|?$/.test(line); }
+    function render(markdown) {
+      const lines = markdown.replaceAll('\r\n', '\n').split('\n'); let html = ''; let i = 0;
+      while (i < lines.length) {
+        const line = lines[i];
+        if (line.startsWith('```')) { const lang = line.slice(3).trim(); i++; let code = ''; while (i < lines.length && !lines[i].startsWith('```')) code += (code ? '\n' : '') + lines[i++]; html += '<pre>' + esc(code) + '</pre>'; i++; continue; }
+        if (line.startsWith('$$')) { let equation = [line]; i++; while (i < lines.length && !lines[i].startsWith('$$')) equation.push(lines[i++]); html += '<div class="display-math">' + esc(equation.join('\n') + '\n$$') + '</div>'; i++; continue; }
+        if (line.startsWith('|') && i + 1 < lines.length && isDivider(lines[i + 1])) { const head = cells(line); i += 2; let rows = ''; while (i < lines.length && lines[i].startsWith('|')) { rows += '<tr>' + cells(lines[i++]).map(x => '<td>' + x + '</td>').join('') + '</tr>'; } html += '<table><thead><tr>' + head.map(x => '<th>' + x + '</th>').join('') + '</tr></thead><tbody>' + rows + '</tbody></table>'; continue; }
+        const heading = line.match(/^(#{1,3})\s+(.+)$/); if (heading) { const level = heading[1].length; html += `<h${level}>${inline(heading[2])}</h${level}>`; i++; continue; }
+        if (/^---+$/.test(line)) { html += '<hr>'; i++; continue; }
+        if (line.startsWith('> ')) { html += '<blockquote>' + inline(line.slice(2)) + '</blockquote>'; i++; continue; }
+        if (/^- /.test(line)) { let items = ''; while (i < lines.length && /^- /.test(lines[i])) items += '<li>' + inline(lines[i++].slice(2)) + '</li>'; html += '<ul>' + items + '</ul>'; continue; }
+        if (/^\d+\. /.test(line)) { let items = ''; while (i < lines.length && /^\d+\. /.test(lines[i])) items += '<li>' + inline(lines[i++].replace(/^\d+\. /, '')) + '</li>'; html += '<ol>' + items + '</ol>'; continue; }
+        if (line.trim() === '') { i++; continue; }
+        let paragraph = [line]; i++; while (i < lines.length && lines[i].trim() !== '' && !/^(#{1,3})\s|^\[|^\||^- |^\d+\. |^---+$|^```|^\$\$/.test(lines[i])) paragraph.push(lines[i++]); html += '<p>' + inline(paragraph.join(' ')) + '</p>';
+      }
+      return html;
+    }
+    function typeset(target, attempt = 0) {
+      if (window.MathJax?.typesetPromise) { window.MathJax.typesetPromise([target]); return; }
+      if (attempt < 100) setTimeout(() => typeset(target, attempt + 1), 50);
+    }
+    async function boot() {
+      const target = document.querySelector('main');
+      try { const response = await fetch('ch4-matrix-decompositions-lesson.md'); if (!response.ok) throw new Error(`Could not load lesson (${response.status})`); target.innerHTML = render(await response.text()); typeset(target); }
+      catch (error) { target.innerHTML = `<p class="error">${esc(error.message)}</p>`; }
+    }
+    addEventListener('DOMContentLoaded', boot);
+  </script>
+</head>
+<body>
+  <header>
+    <p class="back"><a href="index.html">← Textbook TOC</a></p>
+    <h1>Chapter 4 — Decompositions: Factor Everything</h1>
+    <p>LU, Cholesky, QR, eigendecomposition, SVD — the anatomy of a matrix.</p>
+  </header>
+  <nav class="chapnav">
+    <a href="ch3-eigenvalues-eigenvectors-viewer.html">← Chapter 3</a>
+    <a href="index.html">Textbook TOC →</a>
+  </nav>
+  <main><p class="loading">Loading lesson…</p></main>
+</body>
+</html>

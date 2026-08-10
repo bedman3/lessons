@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Linear Algebra Textbook — Table of Contents</title>
+  <style>
+    :root { color-scheme: light; --ink: #172033; --muted: #5d687a; --rule: #dce3ed; --accent: #b45309; --paper: #fff; --bg: #f5f7fa; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.65 ui-serif, Georgia, Cambria, "Times New Roman", serif; }
+    header { background: linear-gradient(135deg, #7c2d12, #b45309); color: #fff; padding: 2.5rem max(1.25rem, calc((100vw - 850px) / 2)); }
+    header .back { margin: 0 0 .4rem; font-family: ui-sans-serif, system-ui, sans-serif; font-size: .85em; }
+    header .back a { color: #fef3c7; text-decoration: none; }
+    header .back a:hover { text-decoration: underline; }
+    header h1 { margin: 0; font: 700 clamp(1.8rem, 5vw, 2.7rem)/1.15 ui-sans-serif, system-ui, sans-serif; }
+    header p { margin: .6rem 0 0; color: #fef3c7; }
+    main { width: min(850px, calc(100% - 2rem)); margin: 1.5rem auto 4rem; }
+    h1, h2, h3 { font-family: ui-sans-serif, system-ui, sans-serif; line-height: 1.25; color: #102b42; }
+    h2 { font-size: 1.3rem; border-bottom: 1px solid var(--rule); padding-bottom: .35rem; margin: 0 0 1rem; }
+    .card { background: var(--paper); border: 1px solid var(--rule); border-radius: 14px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; box-shadow: 0 12px 40px #1d2a3912; }
+    .card:hover { border-color: var(--accent); }
+    .card h3 { margin: 0 0 .25rem; font-size: 1.15rem; }
+    .card h3 a { color: inherit; text-decoration: none; }
+    .card h3 a:hover { color: var(--accent); }
+    .card p { margin: 0 0 .6rem; color: var(--muted); font-size: .95em; }
+    .tag { display: inline-block; font: .78em ui-monospace, SFMono-Regular, Menlo, monospace; padding: .1rem .5rem; border-radius: 999px; border: 1px solid var(--rule); color: var(--muted); margin-bottom: .6rem; }
+    .links { font-family: ui-sans-serif, system-ui, sans-serif; font-size: .9em; }
+    .links a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+    .links a:hover { text-decoration: underline; }
+    footer { width: min(850px, calc(100% - 2rem)); margin: 0 auto 2rem; color: var(--muted); font-size: .85em; }
+    @media (max-width: 600px) { body { font-size: 16px; } main { width: 100%; margin: 0 0 2rem; } .card { border-radius: 0; border-left: 0; border-right: 0; } }
+  </style>
+</head>
+<body>
+  <header>
+    <p class="back"><a href="../index.html">← All lessons</a></p>
+    <h1>Linear Algebra — A Textbook in Four Chapters</h1>
+    <p>Read in order; each chapter builds on the last. Worked examples in every section.</p>
+  </header>
+  <main>
+
+    <div class="card">
+      <h3><a href="ch1-matrix-intuition-viewer.html">Chapter 1 — Matrices as Machines: Intuition First</a></h3>
+      <span class="tag">intuition</span>
+      <p>Vectors are arrows, matrices are machines. Diagonal matrices, three views of matrix–vector products, the four moves, determinant as volume change, composition.</p>
+      <div class="links">
+        <a href="ch1-matrix-intuition-viewer.html">Read</a>
+        <a href="ch1-matrix-intuition-lesson.md">Markdown</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><a href="ch2-matrix-mechanics-viewer.html">Chapter 2 — Mechanics: The Moves You Must Be Fluent In</a></h3>
+      <span class="tag">mechanics</span>
+      <p>Solving Ax = b by elimination, inverses, rank and nullspace, determinants by row reduction — every move with a replayable worked example.</p>
+      <div class="links">
+        <a href="ch2-matrix-mechanics-viewer.html">Read</a>
+        <a href="ch2-matrix-mechanics-lesson.md">Markdown</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><a href="ch3-eigenvalues-eigenvectors-viewer.html">Chapter 3 — Eigenvalues &amp; Eigenvectors: The Hidden Directions</a></h3>
+      <span class="tag">eigenvalues · eigenvectors</span>
+      <p>The hidden directions a matrix never spins. Characteristic polynomial, diagonalization, the spectral theorem for symmetric matrices, PCA and PageRank, 3×3 worked example.</p>
+      <div class="links">
+        <a href="ch3-eigenvalues-eigenvectors-viewer.html">Read</a>
+        <a href="ch3-eigenvalues-eigenvectors-lesson.md">Markdown</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><a href="ch4-matrix-decompositions-viewer.html">Chapter 4 — Decompositions: Factor Everything</a></h3>
+      <span class="tag">decompositions</span>
+      <p>LU, Cholesky, QR, eigendecomposition, and the SVD — each with a worked example, a "why you want it" rule, and the decision flowchart for choosing.</p>
+      <div class="links">
+        <a href="ch4-matrix-decompositions-viewer.html">Read</a>
+        <a href="ch4-matrix-decompositions-lesson.md">Markdown</a>
+      </div>
+    </div>
+
+  </main>
+  <footer>Part of the lessons site — <a href="../index.html" style="color:#b45309">back to all lessons</a>.</footer>
+</body>
+</html>
