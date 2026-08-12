@@ -16,6 +16,7 @@ Each lesson is a markdown file plus a self-contained HTML viewer that renders it
 | [Conditional Probability](conditional-probability-viewer.html) | Bayes, chain rule, conjugate priors, information theory, KL divergence, inequalities |
 | [Probability Toolkit](probability-toolkit-viewer.html) | Distributions, MGFs, expectation tricks, order statistics, CLT, heavy tails |
 | [Statistics & Statistical Inference](statistics-inference-viewer.html) | Estimators, MLE, confidence intervals, hypothesis testing, power, Bayes |
+| [Statistical Tests](statistical-tests-viewer.html) | z vs t, binomial mean/variance, Welch, chi-square, F tests, correlation |
 | [Calculus & Optimization](calculus-optimization-viewer.html) | Derivatives, gradients, Taylor, convexity, Lagrange multipliers, Newton |
 | [Stochastic Processes](stochastic-processes-viewer.html) | Random walks, gambler's ruin, martingales, Brownian motion, Ito's lemma |
 | [Options Pricing](options-pricing-viewer.html) | Put-call parity, binomial model, Black-Scholes, Greeks, implied vol |
