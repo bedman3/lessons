@@ -14,6 +14,7 @@ Each lesson is a markdown file plus a self-contained HTML viewer that renders it
 |---|---|
 | [Probability & Statistics Foundations — Six-Chapter Course](prob-stats/index.html) | Discrete vs continuous probability, distributions, dependence, sampling, LLN, CLT, z/t/χ²/F inference, regression |
 | [Applied Machine Learning — Six-Chapter Course](applied-ml/index.html) | Learning theory, regularized linear models, model families, evaluation, calibration, validation, leakage, production |
+| [Monte Carlo, PDEs & Advanced Derivatives — Seven-Chapter Course](computational-finance/index.html) | Martingale pricing, simulation, variance reduction, Greeks, pricing PDEs, finite differences, American options, volatility calibration |
 | [Markov Chains for Quant Finance](markov-chains-quant-finance-viewer.html) | Transition matrices, stationary distributions, absorbing chains, credit migration, HMMs |
 | [Conditional Probability](conditional-probability-viewer.html) | Bayes, chain rule, conjugate priors, information theory, KL divergence, inequalities |
 | [Probability Toolkit](probability-toolkit-viewer.html) | Distributions, MGFs, expectation tricks, order statistics, CLT, heavy tails |
@@ -30,7 +31,7 @@ Each lesson is a markdown file plus a self-contained HTML viewer that renders it
 ## Recommended paths
 
 - **Core mathematical prerequisites:** Probability & Statistics Foundations → Linear Algebra textbook → Calculus & Optimization → Stochastic Processes.
-- **Quantitative finance:** core prerequisites → Options Pricing → Factor Models & Residualization → Markov Chains for Quant Finance.
+- **Quantitative finance:** core prerequisites → Options Pricing → Monte Carlo, PDEs & Advanced Derivatives → Factor Models & Residualization → Markov Chains for Quant Finance.
 - **Machine learning:** Probability & Statistics Foundations → Linear Algebra for ML & Quant Finance → Applied Machine Learning → Machine Learning & Deep Learning Foundations.
 
 The longer course pages teach concepts in sequence. The standalone lessons are concise references and alternate explanations.
@@ -50,6 +51,7 @@ index.html              — table of contents
 lin-alg/                — the linear algebra textbook (4 chapters)
 prob-stats/             — probability and statistics foundations (6 chapters)
 applied-ml/             — applied machine learning (6 chapters)
+computational-finance/  — Monte Carlo, PDEs, and advanced derivatives (7 chapters)
 assets/                 — shared course viewer styles and renderer
 scripts/                — static validation for course content and links
 ```
