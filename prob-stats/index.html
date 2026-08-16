@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Probability &amp; Statistics Foundations</title>
+  <style>
+    :root { color-scheme: light; --ink: #172033; --muted: #5d687a; --rule: #dce3ed; --accent: #0f766e; --paper: #fff; --bg: #f5f7fa; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.65 ui-serif, Georgia, Cambria, "Times New Roman", serif; }
+    header { background: linear-gradient(135deg, #134e4a, #0f766e); color: #fff; padding: 2.5rem max(1.25rem, calc((100vw - 900px) / 2)); }
+    header .back { margin: 0 0 .4rem; font-family: ui-sans-serif, system-ui, sans-serif; font-size: .85em; }
+    header .back a { color: #ccfbf1; text-decoration: none; }
+    header h1 { margin: 0; font: 700 clamp(1.8rem, 5vw, 2.7rem)/1.15 ui-sans-serif, system-ui, sans-serif; }
+    header p { margin: .6rem 0 0; color: #ccfbf1; max-width: 780px; }
+    main { width: min(900px, calc(100% - 2rem)); margin: 1.5rem auto 4rem; }
+    .intro { background: #ecfdf5; border: 1px solid #99f6e4; border-radius: 14px; padding: 1rem 1.4rem; margin-bottom: 1.25rem; }
+    .intro p { margin: .35rem 0; }
+    .card { background: var(--paper); border: 1px solid var(--rule); border-radius: 14px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; box-shadow: 0 12px 40px #1d2a3912; }
+    .card:hover { border-color: var(--accent); }
+    .card h2 { margin: 0 0 .25rem; font: 700 1.18rem/1.3 ui-sans-serif, system-ui, sans-serif; color: #102b42; }
+    .card h2 a { color: inherit; text-decoration: none; }
+    .card h2 a:hover { color: var(--accent); }
+    .card p { margin: 0 0 .6rem; color: var(--muted); font-size: .95em; }
+    .tag { display: inline-block; font: .78em ui-monospace, SFMono-Regular, Menlo, monospace; padding: .1rem .5rem; border-radius: 999px; border: 1px solid var(--rule); color: var(--muted); margin-bottom: .6rem; }
+    .links { font-family: ui-sans-serif, system-ui, sans-serif; font-size: .9em; }
+    .links a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+    footer { width: min(900px, calc(100% - 2rem)); margin: 0 auto 2rem; color: var(--muted); font-size: .85em; }
+    footer a { color: var(--accent); }
+    @media (max-width: 600px) { body { font-size: 16px; } main { width: 100%; margin: 0 0 2rem; } .intro, .card { border-radius: 0; border-left: 0; border-right: 0; } }
+  </style>
+</head>
+<body>
+  <header>
+    <p class="back"><a href="../index.html">← All lessons</a></p>
+    <h1>Probability &amp; Statistics Foundations</h1>
+    <p>A six-chapter prerequisite path from probability spaces and distributions to the CLT, classical inference, and regression—built for later work in quantitative finance and machine learning.</p>
+  </header>
+  <main>
+    <section class="intro">
+      <p><strong>Recommended use:</strong> read in order if probability and statistics feel fragmented. Each chapter combines intuition, formal theory, worked examples, practical failure modes, and exercises with solution outlines.</p>
+      <p>The shorter probability and statistics lessons remain useful as quick references; this course supplies the connective tissue.</p>
+    </section>
+
+    <article class="card">
+      <h2><a href="ch1-probability-language-viewer.html">Chapter 1 — Probability Language</a></h2>
+      <span class="tag">events · random variables · PMF · PDF · CDF</span>
+      <p>Outcomes and events, probability axioms, discrete versus continuous variables, mixed distributions, transformations, and quantiles.</p>
+      <div class="links"><a href="ch1-probability-language-viewer.html">Read</a><a href="ch1-probability-language-lesson.md">Markdown</a></div>
+    </article>
+
+    <article class="card">
+      <h2><a href="ch2-distributions-moments-viewer.html">Chapter 2 — Distributions &amp; Moments</a></h2>
+      <span class="tag">expectation · variance · distribution families · tails</span>
+      <p>The recurring discrete and continuous distributions, how their assumptions arise, and how moments, covariance, and tail behaviour summarize them.</p>
+      <div class="links"><a href="ch2-distributions-moments-viewer.html">Read</a><a href="ch2-distributions-moments-lesson.md">Markdown</a></div>
+    </article>
+
+    <article class="card">
+      <h2><a href="ch3-joint-conditional-viewer.html">Chapter 3 — Joint, Conditional &amp; Dependent Variables</a></h2>
+      <span class="tag">Bayes · dependence · conditional expectation</span>
+      <p>Joint and marginal laws, conditional information, Bayes, independence, total expectation and variance, and why association is not causation.</p>
+      <div class="links"><a href="ch3-joint-conditional-viewer.html">Read</a><a href="ch3-joint-conditional-lesson.md">Markdown</a></div>
+    </article>
+
+    <article class="card">
+      <h2><a href="ch4-sampling-clt-viewer.html">Chapter 4 — Samples, Estimators, LLN &amp; CLT</a></h2>
+      <span class="tag">sampling distributions · standard error · convergence</span>
+      <p>How samples produce uncertain estimates, why error shrinks at a square-root rate, and exactly how the LLN differs from the CLT.</p>
+      <div class="links"><a href="ch4-sampling-clt-viewer.html">Read</a><a href="ch4-sampling-clt-lesson.md">Markdown</a></div>
+    </article>
+
+    <article class="card">
+      <h2><a href="ch5-classical-inference-viewer.html">Chapter 5 — Classical Inference</a></h2>
+      <span class="tag">z · t · chi-square · F · binomial</span>
+      <p>Test-statistic families, confidence intervals, p-values, effect sizes, power, multiplicity, and the assumptions that determine valid inference.</p>
+      <div class="links"><a href="ch5-classical-inference-viewer.html">Read</a><a href="ch5-classical-inference-lesson.md">Markdown</a></div>
+    </article>
+
+    <article class="card">
+      <h2><a href="ch6-regression-bridge-viewer.html">Chapter 6 — Regression &amp; the Modelling Bridge</a></h2>
+      <span class="tag">OLS · uncertainty · diagnostics · ML bridge</span>
+      <p>Conditional means, least-squares geometry, coefficient uncertainty, robust errors, regularization, likelihood, and the transition from inference to prediction.</p>
+      <div class="links"><a href="ch6-regression-bridge-viewer.html">Read</a><a href="ch6-regression-bridge-lesson.md">Markdown</a></div>
+    </article>
+  </main>
+  <footer>Part of the lessons site — <a href="../index.html">back to all lessons</a>.</footer>
+</body>
+</html>
