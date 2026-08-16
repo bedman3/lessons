@@ -16,7 +16,7 @@ header { background: linear-gradient(135deg, var(--accent-dark), var(--accent));
 header .back { margin: 0 0 .4rem; font-family: ui-sans-serif, system-ui, sans-serif; font-size: .85em; }
 header .back a { color: var(--accent-soft); text-decoration: none; }
 header .back a:hover { text-decoration: underline; }
-header h1 { margin: 0; font: 700 clamp(1.75rem, 5vw, 2.65rem)/1.15 ui-sans-serif, system-ui, sans-serif; }
+header h1 { margin: 0; color: #fff; font: 700 clamp(1.75rem, 5vw, 2.65rem)/1.15 ui-sans-serif, system-ui, sans-serif; }
 header p { margin: .6rem 0 0; color: var(--accent-soft); }
 main { width: min(900px, calc(100% - 2rem)); margin: 1.5rem auto 4rem; background: var(--paper); padding: clamp(1.25rem, 5vw, 3.5rem); border: 1px solid var(--rule); border-radius: 14px; box-shadow: 0 12px 40px #1d2a3912; }
 h1, h2, h3, h4 { font-family: ui-sans-serif, system-ui, sans-serif; line-height: 1.25; color: #102b42; }
